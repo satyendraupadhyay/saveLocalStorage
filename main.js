@@ -17,17 +17,43 @@
 // // Cookie
 // document.cookie = 'name=Satyendra Upadhyay';
 
-var nameGet = document.getElementById('name');
-var emailGet = document.getElementById('email');
+// let myObj = {
+//     name: 'Satyendra',
+//     age: 24
+// };
+
+// let myObj_Serialized = JSON.stringify(myObj);
+
+// localStorage.setItem('myObj',myObj_Serialized);
+
+// let myObj_Deserialized = JSON.parse(localStorage.getItem('myObj'));
+// console.log(myObj_Deserialized);
+
+// add data to local storage via submit button
 
 var form = document.getElementById('my-form');
 
 // submit event
 form.addEventListener('submit',addLocal);
 
-
 function addLocal(e){
     e.preventDefault();
-    localStorage.setItem('Name',nameGet.value);
-    localStorage.setItem('Email',emailGet.value);
+
+    var nameGet = document.getElementById('name');
+    var emailGet = document.getElementById('email');
+    var userDetails = {
+    name: nameGet.value,
+    email: emailGet.value
+};
+
+    // convert to string
+    let userDetails_Serialized = JSON.stringify(userDetails);
+    console.log(userDetails_Serialized);
+
+    localStorage.setItem('userdetails',userDetails_Serialized);
+
+    var storedData = localStorage.getItem('userdetails');
+    var userDetails = JSON.parse(storedData);
+
 }
+
