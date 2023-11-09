@@ -32,28 +32,42 @@
 // add data to local storage via submit button
 
 var form = document.getElementById('my-form');
+var userList = document.getElementById('user-list');
 
 // submit event
-form.addEventListener('submit',addLocal);
+form.addEventListener('submit', addLocal);
 
-function addLocal(e){
+function addLocal(e) {
     e.preventDefault();
 
     var nameGet = document.getElementById('name');
     var emailGet = document.getElementById('email');
+
     var userDetails = {
-    name: nameGet.value,
-    email: emailGet.value
-};
+        name: nameGet.value,
+        email: emailGet.value
+    };
 
-    // convert to string
+    // Convert to string
     let userDetails_Serialized = JSON.stringify(userDetails);
-    console.log(userDetails_Serialized);
 
-    localStorage.setItem('userdetails',userDetails_Serialized);
+    // Generate a unique key (e.g., using a timestamp)
+    var key = 'userdetails_' + Date.now();
 
-    var storedData = localStorage.getItem('userdetails');
-    var userDetails = JSON.parse(storedData);
+    // Store the data with the unique key
+    localStorage.setItem(key, userDetails_Serialized);
 
+    // Clear the form inputs
+    nameGet.value = '';
+    emailGet.value = '';
+
+    // Add the saved data to the list
+    displaySavedData(key, userDetails);
 }
 
+// Function to display saved data in a list
+function displaySavedData(key, userDetails) {
+    var listItem = document.createElement('li');
+    listItem.textContent = `${userDetails.name} -  ${userDetails.email}`;
+    userList.appendChild(listItem);
+}
