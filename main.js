@@ -74,12 +74,26 @@ function displaySavedData(key, userDetails) {
     delBtn.type = 'button';
     delBtn.textContent = 'Delete';
 
+    var editBtn = document.createElement('button');
+    editBtn.type = 'button';
+    editBtn.textContent = 'Edit';
+
     delBtn.addEventListener('click', function() {
         listItem.remove();
         localStorage.removeItem(key);
     });
 
+    editBtn.addEventListener('click', function() {
+        document.getElementById('name').value = userDetails.name;
+        document.getElementById('email').value = userDetails.email;
+      
+        listItem.remove();
+        localStorage.removeItem(key);
+
+    });
+
     userList.appendChild(listItem);
     listItem.appendChild(delBtn);
+    listItem.appendChild(editBtn);
 
 }
