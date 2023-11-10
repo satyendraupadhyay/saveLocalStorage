@@ -69,5 +69,17 @@ function addLocal(e) {
 function displaySavedData(key, userDetails) {
     var listItem = document.createElement('li');
     listItem.textContent = `${userDetails.name} -  ${userDetails.email}`;
+
+    var delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.textContent = 'Delete';
+
+    delBtn.addEventListener('click', function() {
+        listItem.remove();
+        localStorage.removeItem(key);
+    });
+
     userList.appendChild(listItem);
+    listItem.appendChild(delBtn);
+
 }
