@@ -42,10 +42,12 @@ function addLocal(e) {
 
     var nameGet = document.getElementById('name');
     var emailGet = document.getElementById('email');
+    var phoneGet = document.getElementById('phone');
 
     var userDetails = {
         name: nameGet.value,
-        email: emailGet.value
+        email: emailGet.value,
+        phone: phoneGet.value
     };
 
     // Convert to string
@@ -60,6 +62,19 @@ function addLocal(e) {
     // Clear the form inputs
     nameGet.value = '';
     emailGet.value = '';
+    phoneGet.value = '';
+
+    // Saving the user Details on Crud Crud
+    axios.post("https://crudcrud.com/api/8a3128ede0df4f169d62f27fb4ce20b5/appointment", userDetails)
+    .then(res => {
+        
+        console.log(res);
+    })
+    .catch(err => {
+        document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
+        console.log(err)
+    });
+    // -------------------------------------------------------------
 
     // Add the saved data to the list
     displaySavedData(key, userDetails);
@@ -68,7 +83,7 @@ function addLocal(e) {
 // Function to display saved data in a list
 function displaySavedData(key, userDetails) {
     var listItem = document.createElement('li');
-    listItem.textContent = `${userDetails.name} -  ${userDetails.email}`;
+    listItem.textContent = `${userDetails.name} -  ${userDetails.email} - ${userDetails.phone}`;
 
     var delBtn = document.createElement('button');
     delBtn.type = 'button';
@@ -86,6 +101,7 @@ function displaySavedData(key, userDetails) {
     editBtn.addEventListener('click', function() {
         document.getElementById('name').value = userDetails.name;
         document.getElementById('email').value = userDetails.email;
+        document.getElementById('phone').value = userDetails.phone;
       
         listItem.remove();
         localStorage.removeItem(key);
