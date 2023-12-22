@@ -65,7 +65,7 @@ function addLocal(e) {
     phoneGet.value = '';
 
     // Saving the user Details on Crud Crud
-    axios.post("https://crudcrud.com/api/8a3128ede0df4f169d62f27fb4ce20b5/appointment", userDetails)
+    axios.post("https://crudcrud.com/api/b6e8c94e545b48e1829f1155acb72c1a/appointment", userDetails)
     .then(res => {
         
         console.log(res);
@@ -98,7 +98,7 @@ function displaySavedData(key, userDetails) {
         
         // Delete from Crud Crud
         var itemId = userDetails._id;
-        axios.delete(`https://crudcrud.com/api/8a3128ede0df4f169d62f27fb4ce20b5/appointment/${itemId}`)
+        axios.delete(`https://crudcrud.com/api/b6e8c94e545b48e1829f1155acb72c1a/appointment/${itemId}`)
             .then(response => {
                 console.log('Item deleted:', response.data);
             })
@@ -111,11 +111,28 @@ function displaySavedData(key, userDetails) {
         document.getElementById('name').value = userDetails.name;
         document.getElementById('email').value = userDetails.email;
         document.getElementById('phone').value = userDetails.phone;
-      
-        listItem.remove();
-        localStorage.removeItem(key);
+    
+        var itemId = userDetails._id;
+    
+        const updatedData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value
+        };
+    
+        axios.patch(`https://crudcrud.com/api/b6e8c94e545b48e1829f1155acb72c1a/appointment/${itemId}`, updatedData)
+            .then(res => {
+                console.log('Item Updated:', res.data);
 
+            
+                listItem.remove();
+                localStorage.removeItem(key);
+            })
+            .catch(err => {
+                console.error('Error Updating item:', err);
+            });
     });
+    
 
     userList.appendChild(listItem);
     listItem.appendChild(delBtn);
@@ -129,7 +146,7 @@ function displaySavedData(key, userDetails) {
  // GET the saved User Details from crudcrud.
     window.addEventListener("DOMContentLoaded", () => {
         var a;
-        axios.get("https://crudcrud.com/api/8a3128ede0df4f169d62f27fb4ce20b5/appointment")
+        axios.get("https://crudcrud.com/api/b6e8c94e545b48e1829f1155acb72c1a/appointment")
         .then(res => {
             for(var i = 0; i < res.data.length;i++){
                 displaySavedData(a, res.data[i])
