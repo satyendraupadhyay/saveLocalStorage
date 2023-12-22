@@ -95,6 +95,16 @@ function displaySavedData(key, userDetails) {
     delBtn.addEventListener('click', function() {
         listItem.remove();
         localStorage.removeItem(key);
+        
+        // Delete from Crud Crud
+        var itemId = userDetails._id;
+        axios.delete(`https://crudcrud.com/api/8a3128ede0df4f169d62f27fb4ce20b5/appointment/${itemId}`)
+            .then(response => {
+                console.log('Item deleted:', response.data);
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error);
+            });
     });
 
     editBtn.addEventListener('click', function() {
@@ -130,3 +140,5 @@ function displaySavedData(key, userDetails) {
         .catch(err => console.error(err));
 
     })
+
+    
