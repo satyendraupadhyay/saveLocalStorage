@@ -74,7 +74,6 @@ function addLocal(e) {
         document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
         console.log(err)
     });
-    // -------------------------------------------------------------
 
     // Add the saved data to the list
     displaySavedData(key, userDetails);
@@ -113,3 +112,21 @@ function displaySavedData(key, userDetails) {
     listItem.appendChild(editBtn);
 
 }
+
+    
+
+
+ // GET the saved User Details from crudcrud.
+    window.addEventListener("DOMContentLoaded", () => {
+        var a;
+        axios.get("https://crudcrud.com/api/8a3128ede0df4f169d62f27fb4ce20b5/appointment")
+        .then(res => {
+            for(var i = 0; i < res.data.length;i++){
+                displaySavedData(a, res.data[i])
+                
+            }
+            console.log(res);
+        })
+        .catch(err => console.error(err));
+
+    })
